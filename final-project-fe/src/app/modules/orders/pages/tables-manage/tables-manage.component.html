@@ -1,0 +1,94 @@
+<div class="c-app">
+  <div app-sidebar class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show"
+    [class.c-sidebar-minimized]="sidebarService.isMinimized | async">
+  </div>
+  <div class="c-wrapper c-fixed-components">
+    <app-header></app-header>
+    <nav class="c-subheader">
+      <span class="h5 breadcrumb text-muted border-0 m-0">
+        Danh sách bàn
+      </span>
+    </nav>
+    <app-body *ngIf="data$ | async  as data">
+
+      <div class="row">
+
+        <div class="col-4">
+          <div class="mt-1 mb-3 input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="cil-calendar font-weight-bolder"></i>
+              </span>
+            </div>
+            <input type="text" class="form-control font-weight-bolder" disabled 
+              [value]="currentTime | date:'dd/MM/yyyy HH:mm'"
+              data-toggle="tooltip" title="Thời gian hiện tại">
+          </div>
+        </div>
+
+        <div class="col-8">
+          <button class="btn btn-outline-info font-weight-bold float-sm-right" type="button" (click)="openEditModal(null)">
+            <i class="cil-plus mx-1"></i>Thêm bàn mới
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-1 mb-4">
+        <div class="col-12">
+          <div class="d-flex justify-content-center font-weight-bold">
+            <div class="text-info mx-4">
+              <i class="cil-mobile-landscape mx-2"></i>Bàn trống
+            </div>
+            <div class="text-warning mx-4">
+              <i class="cil-mobile-landscape mx-2"></i>Bàn đặt trước
+            </div>
+            <div class="text-danger mx-4">
+              <i class="cil-mobile-landscape mx-2"></i>Bàn có người
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngFor="let array of data">
+        <div class="col-xl-2 col-sm-4" *ngFor="let table of array">
+          <div class="card">
+            <div class="card-body d-inline">
+              <div class="text-center">
+                Bàn {{ table.tableIndex }}
+              </div>
+              <div class="text-center icon-x4" 
+                [class.text-info]="table.status === 'Available'"
+                [class.text-danger]="table.status === 'Seated'" 
+                [class.text-warning]="table.status === 'Booked'"
+              >
+                <i class="cil-mobile-landscape"></i>
+              </div>
+              <div class="text-center">{{ table.capacity }} người</div>
+            </div>
+            <div class="card-footer pt-0 d-flex justify-content-center">
+              <button type="button" class="btn btn-outline-info" data-toggle="tooltip" title="Chỉnh sửa thông tin bàn"
+                (click)="openEditModal(table)"
+                [disabled]="table.status !== 'Available'"
+                [class.btn-outline-dark]="table.status !== 'Available'">
+                <i class="cil-pencil"></i>
+              </button>
+              <button type="button" class="btn btn-outline-danger ml-1" data-toggle="tooltip" title="Gọi món"
+                [routerLink]="[table.id]"
+                [disabled]="table.status !== 'Seated'"
+                [class.btn-outline-dark]="table.status !== 'Seated'">
+                <i class="cil-dinner"></i>
+              </button>
+              <button type="button" class="btn btn-outline-success ml-1" data-toggle="tooltip" title="Thanh toán"
+                [routerLink]="table.status === 'Booked' ? ['dat-ban/', table.id] : ['thanh-toan/', table.id]"
+                [disabled]="table.status === 'Available'"
+                [class.btn-outline-dark]="table.status === 'Available'">
+                <i class="cil-money"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>      
+
+    </app-body>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="c-app" *ngIf="data$ | async as data">
+  <!-- <div app-sidebar class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show"
+    [class.c-sidebar-minimized]="sidebarService.isMinimized | async">
+  </div> -->
+  <div class="c-wrapper c-fixed-components">
+    <nav class="c-subheader">
+      <span class="h5 breadcrumb text-muted border-0 m-0">
+        {{ data.booking?.forWedding ? 'Đặt trước món ăn cho lịch đặt bàn của bạn' : 'Đặt món ăn cho một suất ăn' }} 
+      </span>
+    </nav>
+    <app-body>
+
+      <div class="row">
+        <div class="col-3">
+          <app-categories-select
+            [categories]="data.categories"
+            (categorySelected)="selectCategory($event)"></app-categories-select>
+        </div>
+
+        <div class="col-9">
+          <app-dishes-select [categoryId]="categoryId"></app-dishes-select>
+        </div>
+      </div>
+
+    </app-body>
+  </div>
+</div>

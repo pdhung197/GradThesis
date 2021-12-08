@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Danh sách món ăn đang chọn</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <div class="alert alert-warning" *ngIf="!ordersSelected.length">
+    Hiện tại không có món ăn nào đang chọn
+  </div>
+
+  <div class="row mt-4" *ngIf="ordersSelected.length">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr class="table-success">
+              <th scope="col" class="col-name">Món ăn</th>
+              <th scope="col" class="col-amount">Số lượng</th>
+              <th scope="col" class="col-unit">Đơn vị tính</th>
+              <th scope="col" class="col-price">Đơn giá (VND)</th>
+              <th scope="col" class="col-action"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of ordersSelected; let i = index">
+              <th scope="row">{{ order.dish.name }}</th>
+              <td>{{ order.amount }}</td>
+              <td>{{ order.dish.unit }}</td>
+              <td>{{ order.dish.price | currency:'VND':'' }}</td>
+              <td class="text-center"><button class="mx-1 btn btn-outline-success" (click)="onAddAmount(i)">
+                <i class="cil-plus"></i>
+              </button>
+                <button class="mx-1 btn btn-outline-info" [disabled]="order.amount === 1" (click)="onReduceAmount(i)">
+                  <i class="cil-minus"></i>
+                </button>
+                <button class="mx-1 btn btn-outline-danger" (click)="onRemoveOrder(i)">
+                  <i class="cil-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Đóng</button>
+  <button type="button" class="btn btn-danger" (click)="onSubmit()">Hoàn tất đặt món</button>
+</div>

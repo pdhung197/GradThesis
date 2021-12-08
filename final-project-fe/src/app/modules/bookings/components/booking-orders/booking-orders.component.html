@@ -1,0 +1,96 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">
+    Danh sách món ăn đã đặt {{ booking.forWedding ? 'cho một suất ăn' : '' }}
+  </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <div>
+    <div class="row">
+      <div class="col-7">
+        
+        <div class="form-group">
+          <ngx-select
+            [multiple]="false" 
+            [items]="allDishes"
+            [(ngModel)]="selectedDishesIds"
+            [autoClearSearch]="true"
+            [noResultsFound]="'Không tìm thấy món ăn với tên này'"
+            [placeholder]="'Nhập tên món ăn'"
+            (selectionChanges)="onSelectDish($event)">
+          </ngx-select>
+        </div>
+
+      </div>
+      <div class="input-group col-5">
+        <input type="number" class="form-control" placeholder="Số lượng" [(ngModel)]="amount">
+        <div class="float-sm-right ml-2">
+          <button class="btn btn-info" (click)="onAddDish()" [disabled]="selectedDishesIds.length <= 0 || amount <= 0">
+            <i class="cil-plus mx-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!selectedOrders || !selectedOrders.length">
+    <div class="alert alert-warning">Hiện tại bàn này chưa gọi món ăn nào</div>
+  </div>
+
+  <div class="mt-4" *ngIf="selectedOrders?.length">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr class="table-success">
+                <th scope="col" class="col-name">Món ăn</th>
+                <th scope="col" class="col-amount">Số lượng</th>
+                <th scope="col" class="col-price">Đơn giá (VND)</th>
+                <th scope="col" class="col-action">Chỉnh sửa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of selectedOrders; let i = index">
+                <th scope="row" class="align-middle">{{ order.dish?.name }}</th>
+                <td class="align-middle text-right">{{ order.amount }}</td>
+                <td class="align-middle text-right">{{ order.dish?.price }}</td>
+                <td class="text-center align-middle">
+                  <button class="mx-1 btn btn-outline-success" (click)="onAddAmount(i)">
+                    <i class="cil-plus"></i>
+                  </button>
+                  <button class="mx-1 btn btn-outline-info" [disabled]="order.amount === 1" (click)="onReduceAmount(i)">
+                    <i class="cil-minus"></i>
+                  </button>
+                  <button class="mx-1 btn btn-outline-danger" (click)="onRemoveOrder(i)">
+                    <i class="cil-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ml-1 font-weight-bold">
+      <div class="col-7">
+        Tổng
+      </div>
+      <div class="col-5">
+        {{ total }} VND
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Đóng</button>
+  <button type="button" class="btn btn-info" (click)="onSubmit()">Lưu</button>
+</div>

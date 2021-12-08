@@ -1,0 +1,32 @@
+<div class="c-app">
+  <div app-sidebar
+    class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show"
+    [class.c-sidebar-minimized]="sidebarService.isMinimized | async">
+  </div>
+  <div class="c-wrapper c-fixed-components">
+    <app-header></app-header>
+    <nav class="c-subheader">
+      <span class="h5 breadcrumb text-muted border-0 m-0">
+        Danh bạ nhà cung cấp
+      </span>
+    </nav>
+    <app-body>
+      <div class="card">
+        <div class="card-body">
+
+          <div class="d-flex mb-3">
+            <a class="btn btn-info mr-2" [routerLink]="['/quan-ly/nguyen-lieu']">
+              <i class="cil-chevron-left mr-1"></i>Quay lại
+            </a>
+            <a class="btn btn-info" [routerLink]="['/quan-ly/nguyen-lieu/lich-su']">
+              <i class="cil-description mr-1"></i>Lịch sử nhập/xuất nguyên liệu
+            </a>
+          </div>
+
+          <app-providers-table></app-providers-table>
+
+        </div>
+      </div>
+    </app-body>
+  </div>
+</div>

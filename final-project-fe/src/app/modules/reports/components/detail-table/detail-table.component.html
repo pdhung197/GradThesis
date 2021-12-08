@@ -1,0 +1,123 @@
+<div *ngIf="data$ | async as data">
+
+  <form class="form-group" [formGroup]="searchForm">
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <div class="radio-toolbar">
+            
+              <input type="radio" id="material"
+                value="material" formControlName="reportType">
+              <label for="material" class="mr-4">Chi - Nguyên liệu</label>
+            
+              <input type="radio" id="bill"
+                value="bill" formControlName="reportType">
+              <label for="bill">Doanh thu</label>
+          </div>          
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="float-sm-right">
+          <a class="btn btn-info" type="button" [href]="downloadReportPath + 'dateFrom=' + dateFrom + '&dateTo=' + dateTo" download>
+            <i class="cil-data-transfer-down mx-1"></i>Xuất báo cáo
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="f.reportType.value === 'bill'">
+
+    <div class="my-5" *ngFor="let item of data.billDetails.result">
+      <div class="row">
+        <div class="col-6">
+          <p class="font-weight-bold">Ngày: {{ item.dateTime | date:'dd/MM/yyyy' }}</p>
+        </div>
+        <div class="col-6">
+          <p class="d-flex justify-content-end font-weight-bold">Tổng doanh thu: {{ item.total | currency:'VND':'' }} VND</p>
+        </div>
+      </div>
+    
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr class="table-success">
+              <th scope="col" class="col-time">Thời gian</th>
+              <th scope="col" class="col-table">Bàn số</th>
+              <th scope="col" class="col-customer">Tên khách hàng</th>
+              <th scope="col" class="col-sum">Tổng hóa đơn (VND)</th>
+              <th scope="col" class="col-action">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bill of item.bills">
+              <th scope="row" class="align-middle">{{ bill.dateTime | date:'HH:mm' }}</th>
+              <td class="align-middle">{{ bill.table.tableIndex }}</td>
+              <td class="align-middle">{{ bill.customer?.name }}</td>
+              <td class="align-middle">{{ bill.total | currency:'VND':'' }}</td>
+              <td class="text-center align-middle">
+                <button class="btn btn-outline-success mx-1" (click)="openDetailModal(bill)">
+                  <i class="cil-description"></i>
+                </button>
+                <button class="btn btn-outline-danger mx-1" (click)="openDeleteModal(bill.id)" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+                  <i class="cil-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        Đang hiện {{ data.billDetails.result.length }} trong tổng số {{ data.billDetails.pagination.totalItems }} ngày
+      </div>
+      <div class="col-6">
+        <div class="d-flex justify-content-end">
+          <pagination 
+            [totalItems]="data.billDetails.pagination.totalItems" 
+            [maxSize]="3" 
+            [itemsPerPage]="3"
+            [(ngModel)]="currentPage" 
+            (pageChanged)="onPageChanged($event.page)" 
+            class="pagination-md justify-content-end"
+            previousText="&lsaquo;" 
+            nextText="&rsaquo;" 
+            firstText="&laquo;" 
+            lastText="&raquo;" 
+            [boundaryLinks]="true"
+            [rotate]="true"></pagination>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="table-responsive" *ngIf="f.reportType.value === 'material'">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr class="table-success">
+          <th scope="col" class="col-date2">Ngày</th>
+          <th scope="col" class="col-name">Tên nguyên liệu</th>
+          <th scope="col" class="col-unit">Đơn vị tính</th>
+          <th scope="col" class="col-amount">Số lượng</th>
+          <th scope="col" class="col-price">Đơn giá (VND)</th>
+          <th scope="col" class="col-total">Thành tiền (VND)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.materialDetails">
+          <th scope="row" class="align-middle">{{ item.dateTime | date:'dd/MM/yyyy' }}</th>
+          <td class="align-middle">{{ item.materialName }}</td>
+          <td class="align-middle">{{ item.unit }}</td>
+          <td class="align-middle">{{ item.amount }}</td>
+          <td class="align-middle">{{ item.unitPrice | currency:'VND':'' }}</td>
+          <td class="align-middle">{{ item.total | currency:'VND':'' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

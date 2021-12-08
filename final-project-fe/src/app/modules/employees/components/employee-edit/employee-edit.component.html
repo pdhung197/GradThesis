@@ -1,0 +1,128 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{ employee ? 'Chỉnh sửa thông tin nhân viên' : 'Thêm nhân viên' }}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-6">
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="name">Tên nhân viên</label>
+                <input type="text" id="name" class="form-control" formControlName="name">
+              </div>
+              <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)" class="invalid-message">
+                Vui lòng nhập tên nhân viên
+              </div>
+            </div>
+          </div>
+    
+          <div class="row mt-4 mb-2">
+            <div class="col-12">
+              <div class="form-group">
+                  <label class="mr-5">Giới tính</label>
+                <div class="form-check form-check-inline">
+                  <input id="male" type="radio" [value]="false" class="form-check-input" formControlName="sex">
+                  <label for="male" class="form-check-label">Nam</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input id="female" type="radio" [value]="true" class="form-check-input" formControlName="sex">
+                  <label for="female" class="form-check-label">Nữ</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" id="phone" class="form-control" formControlName="phone">
+              </div>
+              <div *ngIf="f.phone.invalid && (f.phone.dirty || f.phone.touched)" class="invalid-message">
+                Vui lòng nhập số điện thoại
+              </div>
+            </div>
+          </div>  
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" class="form-control" formControlName="email">
+              </div>
+              <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" class="invalid-message">
+                Vui lòng nhập đúng định dạng email
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-6">
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="idCardNumber">Số CMND</label>
+                <input type="text" id="idCardNumber" class="form-control" formControlName="idCardNumber">
+              </div>
+              <div *ngIf="f.idCardNumber.invalid && (f.idCardNumber.dirty || f.idCardNumber.touched)" class="invalid-message">
+                Vui lòng nhập số CMND
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" class="form-control" formControlName="address">
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="status">Tình trạng</label>
+                <select id="status" class="form-control" formControlName="status">
+                  <option value="Working" selected>Đang làm việc</option>
+                  <option value="Off">Nghỉ phép</option>
+                  <option value="Left">Đã nghỉ việc</option>
+                </select>
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="employeeCategoryId">Loại nhân viên</label>
+                <select id="employeeCategoryId" class="form-control" formControlName="employeeCategoryId">
+                  <option value="" selected>Chọn loại nhân viên</option>
+                  <option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.name }}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="f.employeeCategoryId.invalid && (f.employeeCategoryId.dirty || f.employeeCategoryId.touched)" class="invalid-message">
+                Vui lòng chọn loại nhân viên
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+  
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+      <button type="submit" class="btn btn-info" [disabled]="!employeeForm.valid">Lưu</button>
+    </div>
+  </form>

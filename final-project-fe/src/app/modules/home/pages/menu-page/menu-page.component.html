@@ -1,0 +1,19 @@
+<div class="main">
+  <div class="container">
+    <div class="row" *ngIf="data$ | async as data">
+      <div class="col-3">
+        <app-dish-categories-sidebar [categories]="data.categories"></app-dish-categories-sidebar>
+      </div>
+      <div class="col-9">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="c-footer">
+  <div>Copyright &copy; by TUYEN SON RESTAURANT</div>
+  <div class="ml-auto">
+    <div><i class="cil-envelope-closed mr-1"></i>infothanhtuyenson@gmail.com</div>
+    <div><i class="cil-phone mr-1"></i>0236 3647959</div>
+  </div>
+</footer>

@@ -1,0 +1,86 @@
+<div *ngIf="data$ | async as data">
+
+  <form class="form-group" [formGroup]="searchForm">
+    <div class="row">
+      <div class="col-3">
+        <select class="form-control" formControlName="categoryId">
+          <option value="" selected>Chọn loại</option>
+          <option *ngFor="let category of data.employeeCategories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+      <div class="input-group col-9">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="cil-search"></i>
+          </span>
+        </div>
+        <input type="text" class="form-control" placeholder="Tên nhân viên" aria-describedby="basic-addon1"
+          formControlName="name">
+        <div class="float-sm-right ml-5">
+          <button class="btn btn-info" type="button"
+            (click)="openEditModal(null, data.employeeCategories, searchParams)">
+            <i class="cil-plus mx-1"></i>Thêm nhân viên
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr class="table-success">
+          <th scope="col" class="col-id">#</th>
+          <th scope="col" class="col-name">Họ và tên</th>
+          <th scope="col" class="col-cmnd">Số CMND</th>
+          <th scope="col" class="col-sex">Giới tính</th>
+          <th scope="col" class="col-phone">Số điện thoại</th>
+          <th scope="col" class="col-email">Email</th>
+          <th scope="col" class="col-action">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.employees.result; let i = index">
+          <th scope="row" class="align-middle">{{ i + 1 }}</th>
+          <td class="align-middle">{{ item.name }}</td>
+          <td class="align-middle">{{ item.idCardNumber }}</td>
+          <td class="align-middle">{{ item.sex ? 'Nữ' : 'Nam' }}</td>
+          <td class="align-middle">{{ item.phone }}</td>
+          <td class="align-middle">{{ item.email }}</td>
+          <td class="text-center align-middle">
+            <button class="mx-1 btn btn-outline-success" type="button" data-toggle="tooltip" title="Thêm tài khoản cho nhân viên này"
+              (click)="openUserEditModal(item)">
+              <i class="cil-user-follow"></i>
+            </button>
+            <button class="mx-1 btn btn-outline-info" type="button"
+              (click)="openEditModal(item, data.employeeCategories, searchParams)">
+              <i class="cil-pencil"></i>
+            </button>
+            <button class="mx-1 btn btn-outline-danger"
+              (click)="openDeleteModal(item.id)">
+              <i class="cil-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <pagination 
+      [totalItems]="data.employees.pagination.totalItems" 
+      [maxSize]="3" 
+      [itemsPerPage]="10"
+      [(ngModel)]="currentPage" 
+      (pageChanged)="onPageChanged($event.page)" 
+      class="pagination-md justify-content-end"
+      previousText="&lsaquo;" 
+      nextText="&rsaquo;" 
+      firstText="&laquo;" 
+      lastText="&raquo;" 
+      [boundaryLinks]="true"
+      [rotate]="true"></pagination>
+  </div>
+</div>

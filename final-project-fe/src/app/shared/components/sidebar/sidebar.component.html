@@ -1,0 +1,64 @@
+<div class="c-sidebar-brand">
+  <img
+    class="c-sidebar-brand-full"
+    width="100"
+    src="assets/images/logo.png"
+  />
+  <img
+    class="c-sidebar-brand-minimized"
+    width="46"
+    src="assets/images/logo.png"
+  />
+</div>
+<ul class="c-sidebar-nav-title"></ul>
+<ul class="c-sidebar-nav">
+  <li class="c-sidebar-nav-item" type="button" *ngIf="auth.getCurrentUser().role !== 'SALE_EMP'">
+    <a class="c-sidebar-nav-link" [routerLink]="['/quan-ly/nguyen-lieu']">
+      <i class="c-sidebar-nav-icon cil-apple"></i>
+      Quản lý nguyên liệu
+    </a>
+  </li>
+  <li class="c-sidebar-nav-item" type="button">
+    <a class="c-sidebar-nav-link" [routerLink]="['/quan-ly/thuc-don']">
+      <i class="c-sidebar-nav-icon cil-dinner"></i>
+      Quản lý thực đơn
+    </a>
+  </li>
+  <li class="c-sidebar-nav-item" type="button" *ngIf="auth.getCurrentUser().role !== 'STORE_EMP'">
+    <a class="c-sidebar-nav-link" [routerLink]="['/quan-ly/dat-ban']">
+      <i class="c-sidebar-nav-icon cil-calendar-check"></i>
+      Quản lý đặt bàn
+    </a>
+  </li>
+  <li class="c-sidebar-nav-item" type="button" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+    <a class="c-sidebar-nav-link" [routerLink]="['/quan-ly/nhan-vien']">
+      <i class="c-sidebar-nav-icon cil-people"></i>
+      Quản lý nhân viên
+    </a>
+  </li>
+  <li class="c-sidebar-nav-item" type="button" *ngIf="auth.getCurrentUser().role !== 'STORE_EMP'">
+    <a class="c-sidebar-nav-link" [routerLink]="['/quan-ly/goi-mon']">
+      <i class="c-sidebar-nav-icon cil-dollar"></i>
+      Gọi món & Thanh toán
+    </a>
+  </li>
+  <li class="c-sidebar-nav-item" type="button" *ngIf="auth.getCurrentUser().role !== 'STORE_EMP'">
+    <a class="c-sidebar-nav-link" [routerLink]="['/quan-ly/khach-hang']">
+      <i class="c-sidebar-nav-icon cil-address-book"></i>
+      Danh sách khách hàng
+    </a>
+  </li>
+  <li class="c-sidebar-nav-item" type="button" *ngIf="auth.getCurrentUser().role !== 'STORE_EMP'">
+    <a class="c-sidebar-nav-link" [routerLink]="['/quan-ly/uu-dai']">
+      <i class="c-sidebar-nav-icon cil-tags"></i>
+      Quản lý ưu đãi & khuyến mãi
+    </a>
+  </li>
+
+  <li class="c-sidebar-nav-divider"></li>
+</ul>
+<button
+  class="c-sidebar-minimizer"
+  type="button"
+  (click)="onMinimized()"
+></button>

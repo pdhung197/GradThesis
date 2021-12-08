@@ -1,0 +1,86 @@
+<p class="h5">Món ăn</p>
+<div class="card">
+  <div class="card-body">
+
+    <div *ngIf="data$ | async as data">
+
+      <form class="form-group" [formGroup]="searchForm">
+        <div class="row">
+          <div class="col-3">
+            <select class="form-control" formControlName="categoryId">
+              <option value="" selected>Chọn loại</option>
+              <option *ngFor="let category of data.categories" [value]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+          <div class="input-group col-9">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">
+                <i class="cil-search"></i>
+              </span>
+            </div>
+            <input type="text" class="form-control" placeholder="Tên món ăn" aria-describedby="basic-addon1"
+              formControlName="name">
+            <div class="float-sm-right ml-5" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+              <button class="btn btn-info" type="button" (click)="openEditModal(null, data.categories, searchParams)">
+                <i class="cil-plus mx-1"></i>Thêm món ăn
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr class="table-success">
+              <th scope="col" class="col-name">Tên món ăn</th>
+              <th scope="col" class="col-unit">Đơn vị tính</th>
+              <th scope="col" class="col-price">Đơn giá (VND)</th>
+              <th scope="col" class="col-action">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data.dishes.result">
+              <th scope="row" class="align-middle">{{ item.name }}</th>
+              <td class="align-middle">{{ item.unit }}</td>
+              <td class="align-middle">{{ item.price | currency:'VND':'' }}</td>
+              <td class="text-center align-middle">
+                <button class="mx-1 btn btn-outline-success" type="button" data-toggle="tooltip" title="Xem công thức món ăn"
+                  (click)="openRecipeModal(item, searchParams)">
+                  <i class="cil-book"></i>
+                </button>
+                <button class="mx-1 btn btn-outline-info" type="button"
+                  (click)="openEditModal(item, data.categories, searchParams)">
+                  <i class="cil-pencil"></i>
+                </button>
+                <button class="mx-1 btn btn-outline-danger" (click)="openDeleteModal(item.id)" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+                  <i class="cil-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <pagination 
+          [totalItems]="data.dishes.pagination.totalItems" 
+          [maxSize]="3" 
+          [itemsPerPage]="15"
+          [(ngModel)]="currentPage" 
+          (pageChanged)="onPageChanged($event.page)" 
+          class="pagination-md justify-content-end"
+          previousText="&lsaquo;" 
+          nextText="&rsaquo;" 
+          firstText="&laquo;" 
+          lastText="&raquo;" 
+          [boundaryLinks]="true"
+          [rotate]="true"></pagination>
+      </div>
+
+    </div>
+
+  </div>
+</div>

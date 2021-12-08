@@ -1,0 +1,33 @@
+.table {
+    .col-id {
+        width: 5%;
+    }
+
+    .col-name {
+        width: 15%;
+    }
+
+    .col-cmnd {
+        width: 15%;
+    }
+
+    .col-sex {
+        width: 10%;
+    }
+
+    .col-phone {
+        width: 15%;
+    }
+
+    .col-email {
+        width: 15%;
+    }
+
+    .col-action {
+        width: 20%;
+    }
+}
+
+li.page-item:active {
+    color: red !important;
+}

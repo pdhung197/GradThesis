@@ -1,0 +1,83 @@
+<div class="c-app">
+  <!-- <div app-sidebar class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show"
+    [class.c-sidebar-minimized]="sidebarService.isMinimized | async">
+  </div> -->
+  <div class="c-wrapper c-fixed-components">
+    <app-header></app-header>
+    <nav class="c-subheader">
+      <span class="h5 breadcrumb text-muted border-0 m-0">
+        <i class="cil-clone mr-2"></i>Bàn số {{ (table$ | async).tableIndex }}
+      </span>
+    </nav>
+    <app-body style="background-color: white;">
+
+      <div class="row">
+        <div class="col-3">
+
+          <div>
+            <div class="h5 font-weight-bold mb-3">
+              <i class="cil-calendar-check mr-2"></i>Thông tin đặt bàn
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="!bill?.booking">
+                  <div class="alert alert-success">Bàn này không được đặt trước</div>
+                </div>
+                <div *ngIf="bill?.booking as booking">
+                  <p>Tên khách hàng: {{ booking?.customerName }}</p>
+                  <p>Thời gian đặt: {{ booking?.bookingTime | date:'dd/MM/yyyy HH:mm' }}</p>
+                  <p>Số người: {{ booking?.numberOfPeople }}</p>
+                  <p>Đặt cọc: {{ booking?.deposit | currency:'VND':'' }} VND</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="bill">
+            <div class="h5 font-weight-bold mb-3">
+              <i class="cil-contact mr-2"></i>Khách hàng
+            </div>
+            <div class="card">
+              <div class="card-body" [formGroup]="customerForm">
+                <div class="row" *ngIf="!bill?.customerId">
+                  <div class="col-12" style="display: flex;">
+                    <input type="text" class="form-control mr-1" formControlName="customerCtrl" placeholder="Tên khách hàng / Số điện thoại">
+                    <button class="btn btn-info" type="button" (click)="openAddCustomerModal()">
+                      <i class="cil-plus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="customer$ | async as customer" class="my-3">
+                  <p>Tên khách hàng: {{ customer.name }}</p>
+                  <p>Ngày sinh: {{ customer.birthday | date:'dd/MM/yyyy' }}</p>
+                  <p>Địa chỉ: {{ customer.address }}</p>
+                  <p>Số điện thoại: {{ customer.phone }}</p>
+
+                  <div class="d-flex justify-content-end mt-2" *ngIf="!bill?.customerId">
+                    <button class="btn btn-danger" type="button" (click)="selectCustomer()">
+                      <i class="cil-check mr-1"></i>Xác nhận
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-9">
+          <app-checkout-table (bill)="getBill($event)"></app-checkout-table>
+        </div>
+      </div>
+      
+      <div class="d-flex mb-4">
+        <a class="btn btn-info mr-2" [routerLink]="['/quan-ly/goi-mon']">
+          <i class="cil-chevron-left mr-1"></i>Quay lại
+        </a>
+      </div>
+
+    </app-body>
+  </div>
+</div>

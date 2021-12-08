@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ material ? 'Chỉnh sửa nguyên liệu' : 'Thêm nguyên liệu' }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="name">Tên nguyên liệu</label>
+          <input type="text" id="name" class="form-control" formControlName="name" required>
+        </div>
+        <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)" class="invalid-message">
+          Vui lòng nhập tên nguyên liệu
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="unit">Đơn vị tính</label>
+          <input type="text" id="unit" class="form-control" formControlName="unit">
+        </div>
+        <div *ngIf="f.unit.invalid && (f.unit.dirty || f.unit.touched)" class="invalid-message">
+          Vui lòng nhập đơn vị tính
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="unitPrice">Đơn giá</label>
+          <input type="number" id="unitPrice" class="form-control" formControlName="unitPrice">
+        </div>
+        <div *ngIf="f.unitPrice.invalid && (f.unitPrice.dirty || f.unitPrice.touched)" class="invalid-message">
+          Vui lòng nhập đơn giá
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="inventory">Lượng kho</label>
+          <input type="number" id="inventory" class="form-control" formControlName="inventory">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+    <button type="submit" class="btn btn-info" [disabled]="!materialForm.valid">Lưu</button>
+  </div>
+</form>

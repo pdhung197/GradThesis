@@ -1,0 +1,72 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ provider ? 'Chỉnh sửa nhà cung cấp' : 'Thêm nhà cung cấp' }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="providerForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="name">Tên nhà cung cấp</label>
+          <input type="text" id="name" class="form-control" formControlName="name">
+        </div>
+        <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)" class="invalid-message">
+          Vui lòng nhập tên nhà cung cấp
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="phone">Số điện thoại</label>
+          <input type="text" id="phone" class="form-control" formControlName="phone">
+        </div>
+        <div *ngIf="f.phone.invalid && (f.phone.dirty || f.phone.touched)" class="invalid-message">
+          Vui lòng nhập số điện thoại
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control" formControlName="email">
+        </div>
+        <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" class="invalid-message">
+          Vui lòng nhập đúng định dạng email
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="address">Địa chỉ</label>
+          <input type="text" id="address" class="form-control" formControlName="address">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="note">Ghi chú</label>
+          <input type="text" id="note" class="form-control" formControlName="note">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+    <button type="submit" class="btn btn-info" [disabled]="!providerForm.valid">Lưu</button>
+  </div>
+</form>

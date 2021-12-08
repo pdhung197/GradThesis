@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Có đơn đặt bàn mới!</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <p>Vừa có một đơn đặt bàn mới trong hệ thống! Bạn có muốn chuyển đến trang đặt bàn?</p>
+  <button type="button" class="btn btn-info mr-3" (click)="goToBookingPage()">Đồng ý</button>
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Đóng</button>
+</div>

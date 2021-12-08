@@ -1,0 +1,13 @@
+img {
+    width: 70%;
+    height: 20%;
+}
+
+a {
+    color: black;
+
+    &:hover {
+        color: gray;
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,78 @@
+<p class="h5 font-weight-bold mb-3">Thanh toán</p>
+<div class="card">
+    <div class="card-body" *ngIf="data$ | async as data">
+
+        <div *ngIf="data.bill === null || data.bill?.orders?.length === 0">
+            <div class="alert alert-warning">Bàn này hiện chưa gọi món ăn nào</div>
+        </div>
+
+        <div *ngIf="data.bill?.orders?.length">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="table-success">
+                            <th scope="col" class="col-name">Món ăn</th>
+                            <th scope="col" class="col-amount">Số lượng</th>
+                            <th scope="col" class="col-unit">Đơn giá (VND)</th>
+                            <th scope="col" class="col-promo">Khuyến mãi</th>
+                            <th scope="col" class="col-price">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of data.bill?.orders">
+                            <th scope="row" class="align-middle">{{ order.dish.name }}</th>
+                            <td class="text-center" class="align-middle">{{ order.amount }}</td>
+                            <td class="text-center" class="align-middle">{{ order.dish.price | currency:'VND':'' }}</td>
+                            <td class="text-center" class="align-middle">{{ order.promotion | discountAmount }}</td>
+                            <td class="text-center" class="align-middle">
+                                {{ order.total | currency:'VND':'' }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-7"></div>
+            <div class="col-5">
+                <div class="mt-4 mr-4">
+                    <div class="row">
+                        <div class="col-7">
+                            <p><i class="cil-clipboard mr-2"></i>Tổng tiền</p>
+                        </div>
+                        <div class="col-5">
+                            <p class="font-weight-bold float-sm-right">{{ total | currency:'VND':'' }} VND</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <p><i class="cil-gift mr-2"></i>Ưu đãi</p>
+                        </div>
+                        <div class="col-5">
+                            <p class="font-weight-bold float-sm-right">{{ data.bill?.promotion | discountAmount }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <p><i class="cil-dollar mr-2"></i>Thành tiền</p>
+                        </div>
+                        <div class="col-5">
+                            <p class="font-weight-bold float-sm-right">{{ data.bill?.total | currency:'VND':'' }} VND</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="float-sm-right mt-3">
+            <a class="btn btn-info mr-2" *ngIf="data.bill" [href]="rootPath + data.bill.id + '/file'" download>
+                <i class="cil-print mr-2"></i>Xuất hóa đơn
+            </a>
+            <button class="btn btn-info mr-3" (click)="onCheckout()" [disabled]="!data.bill">
+                <i class="cil-task mr-2"></i>Thanh toán
+            </button>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="c-app">
+  <div app-sidebar
+    class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show"
+    [class.c-sidebar-minimized]="sidebarService.isMinimized | async">
+  </div>
+    <div class="c-wrapper c-fixed-components">
+      <app-header></app-header>
+      <nav class="c-subheader">
+        <span class="h5 breadcrumb text-muted border-0 m-0">
+          Danh sách khách hàng
+        </span>
+      </nav>
+      <app-body>
+        <div class="card">
+          <div class="card-body">
+            
+            <app-customers-table></app-customers-table>
+  
+          </div>
+        </div>
+      </app-body>
+    </div>
+  </div>

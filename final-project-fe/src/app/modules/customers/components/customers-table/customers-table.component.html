@@ -1,0 +1,74 @@
+<form class="form-group" [formGroup]="searchForm">
+    <div class="mt-1 mb-3 input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="cil-search"></i>
+        </span>
+      </div>
+      <input type="text" class="form-control" placeholder="Tên khách hàng / Số điện thoại" aria-describedby="basic-addon1"
+        formControlName="name">
+      <div class="float-sm-right ml-5 mr-4" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+        <button class="btn btn-info" type="button" (click)="openEditModal(null, searchParams)">
+          <i class="cil-plus mx-1"></i>Thêm khách hàng
+        </button>
+      </div>
+    </div>
+  </form>
+  
+  <div *ngIf="data$ | async as data">
+  
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr class="table-success">
+            <th scope="col" class="align-middle col-id">#</th>
+            <th scope="col" class="align-middle col-name">Tên khách hàng</th>
+            <th scope="col" class="align-middle col-birthday">Ngày sinh</th>
+            <th scope="col" class="align-middle col-address">Địa chỉ</th>
+            <th scope="col" class="align-middle col-phone">Số điện thoại</th>
+            <th scope="col" class="align-middle col-note">Ghi chú</th>
+            <th scope="col" class="align-middle col-action">Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data.customers.result; let i = index">
+            <th scope="row" class="align-middle">{{ i + 1 }}</th>
+            <td class="align-middle">{{ item.name }}</td>
+            <td class="align-middle">{{ item.birthday | date:'dd/MM/yyyy' }}</td>
+            <td class="align-middle">{{ item.address }}</td>
+            <td class="align-middle">{{ item.phone }}</td>
+            <td class="align-middle">{{ item.note }}</td>
+            <td class="text-center align-middle">
+              <button class="mx-1 btn btn-outline-success" type="button"
+                (click)="openHistoryModal(item)">
+                <i class="cil-history"></i>
+              </button>
+              <button class="mx-1 btn btn-outline-info" type="button"
+                (click)="openEditModal(item, searchParams)">
+                <i class="cil-pencil"></i>
+              </button>
+              <button class="mx-1 btn btn-outline-danger" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+                <i class="cil-trash" (click)="openDeleteModal(item.id)"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="d-flex justify-content-end">
+      <pagination 
+        [totalItems]="data.customers.pagination.totalItems" 
+        [maxSize]="3" 
+        [itemsPerPage]="10"
+        [(ngModel)]="currentPage" 
+        (pageChanged)="onPageChanged($event.page)" 
+        class="pagination-md justify-content-end"
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;" 
+        [boundaryLinks]="true"
+        [rotate]="true"></pagination>
+    </div>
+  </div>

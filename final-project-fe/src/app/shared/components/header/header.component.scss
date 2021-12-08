@@ -1,0 +1,19 @@
+.h3 {
+    color: rgb(100, 100, 100);
+}
+
+a {
+    color: rgb(100, 100, 100);
+    font-weight: bold;
+    text-transform: none;
+    cursor: pointer;
+}
+
+a.dropdown-item {
+    color: black;
+    
+    &:active {
+        color: black;
+        background-color: lightgrey;
+    }
+}

@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ table ? 'Chỉnh sửa thông tin bàn' : 'Thêm bàn mới' }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="tableIndex">Số bàn</label>
+          <input type="text" id="tableIndex" class="form-control" formControlName="tableIndex">
+        </div>
+        <div *ngIf="f.tableIndex.invalid && (f.tableIndex.dirty || f.tableIndex.touched)" class="invalid-message">
+          Vui lòng nhập số bàn
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="capacity">Số người</label>
+          <input type="number" id="capacity" class="form-control" formControlName="capacity">
+        </div>
+        <div *ngIf="f.capacity.invalid && (f.capacity.dirty || f.capacity.touched)" class="invalid-message">
+          Vui lòng nhập sức chứa của bàn
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="status">Trạng thái</label>
+          <div class="d-flex justify-content-center radio-toolbar">
+            
+              <input type="radio" id="available"
+                value="Available" formControlName="status">
+              <label for="available" class="mr-4">Bàn trống</label>
+            
+              <!-- <input type="radio" id="booked"
+                value="Booked" formControlName="status">
+              <label for="booked">Bàn đặt trước</label> -->
+            
+              <input type="radio" id="seated"
+                value="Seated" formControlName="status">
+              <label for="seated">Bàn có người</label>
+            
+          </div>          
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+    <button type="submit" class="btn btn-info" [disabled]="!tableForm.valid">Lưu</button>
+  </div>
+</form>

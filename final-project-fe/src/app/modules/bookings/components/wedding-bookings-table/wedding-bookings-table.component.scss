@@ -1,0 +1,33 @@
+.table {
+    .col-id {
+        width: 5%;
+    }
+
+    .col-name {
+        width: 20%;
+    }
+
+    .col-phone {
+        width: 15%;
+    }
+
+    .col-time {
+        width: 20%;
+    }
+
+    .col-number {
+        width: 10%;
+    }
+
+    .col-status {
+        width: 15%;
+    }
+
+    .col-action {
+        width: 15%;
+    }
+}
+
+.bg-danger, .bg-info, .bg-success {
+    color: white;
+}

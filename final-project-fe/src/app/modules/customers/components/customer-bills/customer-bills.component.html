@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Lịch sử hóa đơn Khách hàng - {{ customer.name }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <div class="table-responsive" *ngIf="bills$ | async as bills">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr class="table-success">
+          <th scope="col" class="col-time">Thời gian</th>
+          <th scope="col" class="col-table">Bàn số</th>
+          <th scope="col" class="col-sum">Tổng hóa đơn (VND)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bill of bills">
+          <th scope="row" class="align-middle">{{ bill.dateTime | date:'dd/MM/yyyy HH:mm' }}</th>
+          <td class="align-middle">{{ bill.table.tableIndex }}</td>
+          <td class="align-middle">{{ bill.total | currency:'VND':'' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-info" (click)="bsModalRef.hide()">Đóng</button>
+</div>

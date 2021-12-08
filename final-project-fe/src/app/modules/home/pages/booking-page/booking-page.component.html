@@ -1,0 +1,75 @@
+<div class="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-xl-11 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+            <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body">
+            <p class="h3 card-title text-center mb-3">ĐẶT BÀN</p>
+            <p class="h6 text-center mb-4">Hãy để lại thông tin của bạn, <br>chúng tôi sẽ liên hệ và xác nhận đặt bàn trong thời gian sớm nhất!</p>
+            <form class="form-signin" [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="customerName">Họ và tên</label>
+                <input type="text" id="customerName" class="form-control" autofocus formControlName="customerName">
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="tel" id="phone" class="form-control" formControlName="phone">
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" formControlName="email">
+              </div>
+
+              <hr class="my-4">
+
+              <p class="h5 mb-3">Thông tin đặt bàn</p>
+
+              <div class="row my-3 mx-2 form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="forWedding" formControlName="forWedding">
+                  <label class="form-check-label" for="forWedding">
+                    Đặt tiệc cưới
+                  </label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-7">
+                  <div class="form-group">
+                    <label for="bookingDate">Ngày</label>
+                    <input type="text" id="bookingDate" class="form-control mt-4" 
+                      bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="minDate" formControlName="bookingDate">
+                  </div>
+                </div>
+                <div class="col-5">
+                  <div class="form-group">
+                    <label for="bookingTime">Giờ</label>
+                    <timepicker [showMeridian]="false" formControlName="bookingTime"></timepicker>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="numberOfPeople">Số người</label>
+                <input type="number" id="numberOfPeople" class="form-control" formControlName="numberOfPeople">
+              </div>
+              
+              <div class="form-group">
+                <label for="note">Ghi chú thêm</label>
+                <input type="text" id="note" class="form-control" formControlName="note">
+              </div>
+
+              <button class="btn btn-lg btn-success btn-block text-uppercase" type="submit" [disabled]="!bookingForm.valid" >Đặt bàn</button>
+              <a class="btn btn-lg btn-danger btn-block" href="#">Quay lại</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

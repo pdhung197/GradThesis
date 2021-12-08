@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ category ? 'Chỉnh sửa loại món ăn' : 'Thêm loại món ăn' }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="name">Tên loại món ăn</label>
+          <input type="text" id="name" class="form-control" formControlName="name">
+        </div>
+        <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)" class="invalid-message">
+          Vui lòng nhập tên loại món ăn
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="detail">Mô tả</label>
+          <input type="text" id="detail" class="form-control" formControlName="detail">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+    <button type="submit" class="btn btn-info" [disabled]="!categoryForm.valid">Lưu</button>
+  </div>
+</form>

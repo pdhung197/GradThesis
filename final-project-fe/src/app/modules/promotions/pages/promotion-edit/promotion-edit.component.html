@@ -1,0 +1,214 @@
+<div class="c-app">
+  <div class="c-wrapper c-fixed-components">
+    <app-header></app-header>
+    <nav class="c-subheader">
+      <span class="h5 breadcrumb text-muted border-0 m-0">
+        <i
+          class="cil-gift mr-2"></i>{{ promotionId === 0 ? 'Thêm chương trình ưu đãi' : 'Chỉnh sửa chương trình ưu đãi' }}
+      </span>
+    </nav>
+    <app-body style="background-color: white;">
+
+      <div class="mb-3">
+        <a class="btn btn-info mr-2" [routerLink]="['/quan-ly/uu-dai']">
+          <i class="cil-chevron-left mr-1"></i>Quay lại
+        </a>
+      </div>
+
+      <div class="container">
+
+        <form [formGroup]="promotionForm" (ngSubmit)="onSubmit()">
+
+          <p class="h5 mb-4">Thông tin chương trình ưu đãi</p>
+
+          <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-sm-3 col-form-label" for="describe">Tên chương trình</label>
+            <div class="col-sm-8">
+              <input type="text" id="describe" class="form-control" formControlName="describe">
+              <div *ngIf="f.describe.invalid && (f.describe.dirty || f.describe.touched)" class="invalid-message">
+                Vui lòng nhập tên chương trình
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-sm-3 col-form-label" for="detail">Nội dung cụ thể</label>
+            <div class="col-sm-8">
+              <textarea rows="8" id="detail" class="form-control" formControlName="detail"></textarea>
+              <div *ngIf="f.detail.invalid && (f.detail.dirty || f.detail.touched)" class="invalid-message">
+                Vui lòng nhập nội dung chương trình
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3">
+              <label class="col-form-label">Hình ảnh</label>
+            </div>
+            <div class="col-8 cover-img">
+              <img #cover src="{{defaultCover}}">
+              <input id="cover" type="file" (change)="onFileChanged($event)" accept="image/*">
+              <label for="cover">
+                <i class="cil-cloud-upload mr-2"></i>Tải ảnh lên
+              </label>
+              <button type="button" class="btn btn-info mx-2" (click)="onRemoveImage()">Xóa ảnh</button>
+            </div>
+          </div>
+
+          <hr class="mt-4">
+          <p class="h5 mb-4">Hình thức ưu đãi</p>
+
+          <div class="form-group row mt-5 mb-3">
+            <div class="col-sm-1"></div>
+            <label class="col-sm-3 col-form-label">Hình thức giảm giá</label>
+            <div class="col-sm-8 d-flex justify-content-center">
+              <div class="form-check form-check-inline mx-3">
+                <input id="percent" type="radio" value="Percent" class="form-check-input"
+                  formControlName="discountType">
+                <label for="percent" class="form-check-label">Giảm theo %</label>
+              </div>
+              <div class="form-check form-check-inline mx-3">
+                <input id="amount" type="radio" value="Amount" class="form-check-input" formControlName="discountType">
+                <label for="amount" class="form-check-label">Giảm theo số tiền</label>
+              </div>
+              <div *ngIf="f.discountType.invalid && (f.discountType.dirty || f.discountType.touched)"
+                class="invalid-message">
+                Vui lòng chọn hình thức giảm giá
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-sm-3 col-form-label" for="discountAmount">Mức giảm giá (Vui lòng nhập số)</label>
+            <div class="col-sm-8">
+              <input type="number" id="discountAmount" class="form-control" formControlName="discountAmount">
+              <div *ngIf="f.discountAmount.invalid && (f.discountAmount.dirty || f.discountAmount.touched)"
+                class="invalid-message">
+                Vui lòng nhập lượng giảm giá ứng với hình thức giảm giá ở trên
+              </div>
+            </div>
+          </div>
+
+          <hr class="mt-5">
+          <p class="h5 mb-4">Áp dụng chương trình ưu đãi</p>
+
+          <div class="form-group row mt-5 mb-3">
+            <div class="col-sm-1"></div>
+            <label class="col-sm-3 col-form-label">Hình thức áp dụng khuyến mãi</label>
+            <div class="col-sm-8 d-flex justify-content-center">
+              <div class="form-check form-check-inline mx-3">
+                <input id="dish" type="radio" value="DishPromo" class="form-check-input"
+                  formControlName="promotionType">
+                <label for="dish" class="form-check-label">Khuyến mãi cho món ăn</label>
+              </div>
+              <div class="form-check form-check-inline mx-3">
+                <input id="bill" type="radio" value="BillPromo" class="form-check-input"
+                  formControlName="promotionType">
+                <label for="bill" class="form-check-label">Khuyến mãi cho hóa đơn</label>
+              </div>
+              <div class="form-check form-check-inline mx-3">
+                <input id="customer" type="radio" value="CustomerPromo" class="form-check-input"
+                  formControlName="promotionType">
+                <label for="customer" class="form-check-label">Khuyến mãi cho khách hàng</label>
+              </div>
+              <div *ngIf="f.promotionType.invalid && (f.promotionType.dirty || f.promotionType.touched)"
+                class="invalid-message">
+                Vui lòng chọn hình thức áp dụng khuyến mãi
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.promotionType.value === 'DishPromo'">
+            <div class="form-group row">
+              <div class="col-sm-1"></div>
+              <label for="dish" class="col-sm-3 col-form-label">Chọn món ăn</label>
+              <div class="col-sm-8">
+                <ngx-select
+                  [multiple]="true" 
+                  [items]="allDishes"
+                  [(ngModel)]="selectedDishes"
+                  [ngModelOptions]="{ standalone: true }"
+                  [autoClearSearch]="true"
+                  [noResultsFound]="'Không tìm thấy món ăn với tên này'"
+                  [placeholder]="'Nhập tên món ăn'"
+                  (selectionChanges)="onSelectDish($event)"></ngx-select>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.promotionType.value === 'BillPromo'">
+            <div class="form-group row">
+              <div class="col-sm-1"></div>
+              <label class="col-sm-5 col-form-label" for="condition">Tổng giá trị hóa đơn tối thiểu để nhận ưu đãi (VND)</label>
+              <div class="col-sm-6">
+                <input type="number" id="condition" class="form-control" formControlName="billCondition">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="f.promotionType.value === 'CustomerPromo'">
+            <div class="form-group row">
+              <div class="col-sm-1"></div>
+              <label for="customer" class="col-sm-3 col-form-label">Chọn khách hàng</label>
+              <div class="col-sm-8">
+                <ngx-select
+                  [multiple]="true" 
+                  [items]="allCustomers"
+                  [(ngModel)]="selectedCustomers"
+                  [ngModelOptions]="{ standalone: true }"
+                  [autoClearSearch]="true"
+                  [noResultsFound]="'Không tìm thấy khách hàng với tên này'"
+                  [placeholder]="'Nhập tên khách hàng'"
+                  (selectionChanges)="onSelectCustomer($event)"></ngx-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row mt-4">
+            <div class="col-6">
+              <label for="startTime" class="col-form-label">Ngày bắt đầu</label>
+              <input type="text" id="startTime" class="form-control" bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', adaptivePosition: true }" [minDate]="minDate" formControlName="startTime">
+            </div>
+            <div class="col-6">
+              <label for="endTime" class="col-form-label">Ngày kết thúc</label>
+              <input type="text" id="endTime" class="form-control" bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', adaptivePosition: true }" [minDate]="minDate" formControlName="endTime">
+            </div>
+          </div>
+
+          <br class="mt-5">
+
+          <div class="row my-5">
+
+            <div class="col-12 d-flex justify-content-center" *ngIf="!promotion?.confirmed || promotionId === 0">
+              <button type="submit" class="btn btn-lg btn-info mx-3" [disabled]="!promotionForm.valid">
+                <i class="cil-task mx-2"></i>HOÀN TẤT {{ promotionId > 0 ? 'CHỈNH SỬA' : '' }} 
+              </button>
+              <a class="btn btn-lg btn-secondary mx-3" [routerLink]="['/quan-ly/uu-dai']">
+                <i class="cil-exit-to-app mx-2"></i>HỦY
+              </a>
+              <button type="button" class="btn btn-lg btn-danger mx-3" (click)="onConfirm()" *ngIf="promotionId && auth.getCurrentUser().role === 'ADMIN'">
+                <i class="cil-warning mx-2"></i>XÁC NHẬN ƯU ĐÃI
+              </button>
+            </div>
+
+            <div class="col-12" *ngIf="promotion?.confirmed">
+              <div class="alert alert-success">
+                <p class="text-center">Chương trình ưu đãi này đã được xác nhận và không thể thay đổi được nữa.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </app-body>
+  </div>
+</div>

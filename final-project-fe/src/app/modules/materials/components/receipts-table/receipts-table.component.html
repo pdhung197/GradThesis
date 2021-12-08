@@ -1,0 +1,77 @@
+<form class="form-group" [formGroup]="searchForm">
+  <div class="row">
+    <div class="col-4">
+
+      <select class="form-control" formControlName="type">
+        <option value="" selected>Chọn loại</option>
+        <option value="in">Nhập</option>
+        <option value="out">Xuất</option>
+      </select>
+
+    </div>
+    <div class="col-8">
+
+      <div class="mt-1 mb-3 input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="cil-calendar"></i>
+          </span>
+        </div>
+        <input type="text" class="form-control" placeholder="Tìm theo ngày" aria-describedby="basic-addon1"
+          formControlName="date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+      </div>
+
+    </div>
+  </div>
+</form>
+
+<div *ngIf="data$ | async as data">
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr class="table-success">
+          <th scope="col" class="col-date">Ngày</th>
+          <th scope="col" class="col-provider">Tên nhà cung cấp</th>
+          <th scope="col" class="col-material">Nguyên liệu</th>
+          <th scope="col" class="col-amount">Số lượng</th>
+          <th scope="col" class="col-unit">Đơn vị tính</th>
+          <th scope="col" class="col-price">Đơn giá (VND)</th>
+          <th scope="col" class="col-note">Ghi chú</th>
+          <th scope="col" class="col-action" *ngIf="auth.getCurrentUser().role === 'ADMIN'">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.receipts.result">
+          <th scope="row" class="align-middle">{{ item.dateTime | date:'dd/MM/yyyy' }}</th>
+          <td class="align-middle">{{ item.provider?.name }}</td>
+          <td class="align-middle">{{ item.material.name }}</td>
+          <td class="align-middle">{{ item.amount }}</td>
+          <td class="align-middle">{{ item.unit }}</td>
+          <td class="align-middle">{{ item.unitPrice | currency:'VND':'' }}</td>
+          <td class="align-middle">{{ item.note }}</td>
+          <td class="text-center align-middle" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+            <button class="mx-1 btn btn-outline-danger">
+              <i class="cil-trash" (click)="openDeleteModal(item.id)"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <pagination 
+      [totalItems]="data.receipts.pagination.totalItems" 
+      [maxSize]="3" 
+      [itemsPerPage]="10"
+      [(ngModel)]="currentPage" 
+      (pageChanged)="onPageChanged($event.page)" 
+      class="pagination-md justify-content-end"
+      previousText="&lsaquo;" 
+      nextText="&rsaquo;" 
+      firstText="&laquo;" 
+      lastText="&raquo;" 
+      [boundaryLinks]="true"
+      [rotate]="true"></pagination>
+  </div>
+</div>

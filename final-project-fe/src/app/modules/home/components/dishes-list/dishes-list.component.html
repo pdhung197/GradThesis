@@ -1,0 +1,40 @@
+<div class="row mt-4 ml-0 d-flex justify-content-center">
+
+   <div *ngIf="data$ | async as dishes">
+
+      <div class="row" *ngFor="let array of dishes">
+         <div class="col-sm-12 col-lg-6" *ngFor="let dish of array">
+            <div class="card border-0 shadow mb-3">
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col-5">
+                        <span class="pull-left ml-3">
+                           <img *ngIf="dish.attachmentId" src="{{ imageRoot }}/{{ dish.attachmentId }}"
+                              class="card-img-top" alt="{{ dish.name }}">
+                           <img *ngIf="!dish.attachmentId" src="../../../../../assets/images/food-default-img.png"
+                              class="card-img-top" alt="{{ dish.name }}">
+                        </span>
+                     </div>
+                     <div class="col-7">
+                        <div class="pull-left ml-3">
+                           <h5 class="card-title mb-2">{{ dish.name }}</h5>
+                           <div class="card-text text-black-50">
+                              <p><strong>Đơn vị tính:</strong> {{ dish.unit }}</p>
+                              <p><strong>Đơn giá:</strong> {{ dish.price | currency:'VND':'' }} VND</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-12 text-black-50 mx-3">
+                        <p>{{ dish.description }}</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+</div>

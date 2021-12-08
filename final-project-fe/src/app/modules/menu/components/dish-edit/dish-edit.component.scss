@@ -1,0 +1,25 @@
+.cover-img {
+    text-align: center;
+    vertical-align: middle;
+
+    img {
+        display: block;
+        max-width: 300px;
+        max-height: 300px;
+        margin: auto;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    label {
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 6px 12px;
+        display: inline-block;
+        margin-top: 20px;
+        cursor: pointer;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+    }
+}

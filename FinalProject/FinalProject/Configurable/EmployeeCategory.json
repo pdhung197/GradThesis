@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "Phục vụ"
+  },
+  {
+    "Id": 2,
+    "Name": "Bếp"
+  },
+  {
+    "Id": 3,
+    "Name": "Thu ngân"
+  },
+  {
+    "Id": 4,
+    "Name": "Kho"
+  },
+  {
+    "Id": 5,
+    "Name": "Khác"
+  }
+]

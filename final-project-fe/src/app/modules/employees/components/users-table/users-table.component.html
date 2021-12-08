@@ -1,0 +1,67 @@
+<form class="form-group" [formGroup]="searchForm">
+  <div class="mt-1 mb-3 input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="cil-search"></i>
+      </span>
+    </div>
+    <input type="text" class="form-control" placeholder="Tên người dùng/Tên đăng nhập" aria-describedby="basic-addon1"
+      formControlName="name">
+    <div class="float-sm-right ml-5 mr-4">
+      <button class="btn btn-info" type="button" (click)="openEditModal(null, searchParams)">
+        <i class="cil-plus mx-1"></i>Thêm tài khoản
+      </button>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="data$ | async as data">
+
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr class="table-success">
+          <th scope="col" class="col-id">#</th>
+          <th scope="col" class="col-name">Tên người dùng</th>
+          <th scope="col" class="col-username">Tên đăng nhập</th>
+          <th scope="col" class="col-role">Vai trò</th>
+          <th scope="col" class="col-action">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.users.result; let i = index">
+          <th scope="row" class="align-middle">{{ i + 1 }}</th>
+          <td class="align-middle">{{ item.name }}</td>
+          <td class="align-middle">{{ item.username }}</td>
+          <td class="align-middle">{{ item.role === 'ADMIN' ? 'Admin' : item.role === 'SALE_EMP' ? 'Nhân viên thu ngân' : 'Nhân viên quản lý kho' }}</td>
+          <td class="text-center align-middle">
+            <div *ngIf="item.role !== 'ADMIN' || authService.getCurrentUser().id === item.id">
+              <button class="mx-1 btn btn-outline-info" type="button" (click)="openEditModal(item, searchParams)">
+                <i class="cil-pencil"></i>
+              </button>
+              <button class="mx-1 btn btn-outline-danger" type="button" (click)="openDeleteModal(item.id)">
+                <i class="cil-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <pagination 
+      [totalItems]="data.users.pagination.totalItems" 
+      [maxSize]="3" 
+      [itemsPerPage]="10"
+      [(ngModel)]="currentPage" 
+      (pageChanged)="onPageChanged($event.page)" 
+      class="pagination-md justify-content-end"
+      previousText="&lsaquo;" 
+      nextText="&rsaquo;" 
+      firstText="&laquo;" 
+      lastText="&raquo;" 
+      [boundaryLinks]="true"
+      [rotate]="true"></pagination>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Thông tin công thức món ăn</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <div>
+    <div class="row">
+      <div class="col-7">
+        
+        <div class="form-group">
+          <ngx-select
+            [multiple]="false" 
+            [items]="allMaterials"
+            [(ngModel)]="selectedMaterialsIds"
+            [autoClearSearch]="true"
+            [noResultsFound]="'Không tìm thấy nguyên liệu với tên này'"
+            [placeholder]="'Nhập tên nguyên liệu'"
+            (selectionChanges)="onSelectMaterial($event)">
+          </ngx-select>
+        </div>
+
+      </div>
+      <div class="input-group col-5">
+        <input type="text" class="form-control" placeholder="Số lượng" [(ngModel)]="amount">
+        <div class="float-sm-right ml-2">
+          <button class="btn btn-info" (click)="onAddRecipe()" [disabled]="selectedMaterialsIds.length <= 0">
+            <i class="cil-plus mx-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr class="table-success">
+              <th scope="col" class="col-name">Tên nguyên liệu</th>
+              <th scope="col" class="col-amount">Số lượng</th>
+              <th scope="col" class="col-action"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let recipe of recipes; let i = index">
+              <th scope="row">{{ recipe.material.name }}</th>
+              <td>{{ recipe.amount }}</td>
+              <td class="text-center">
+                <button class="mx-1 btn btn-outline-danger" (click)="onRemoveRecipe(i)">
+                  <i class="cil-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+  <button type="button" class="btn btn-info" (click)="onSubmit()">Lưu</button>
+</div>

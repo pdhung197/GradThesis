@@ -1,0 +1,35 @@
+<div class="row mt-4">
+   <div class="col-12">
+      <div class="card mb-5">
+         <div class="card-body">
+            <a class="clearfix my-2" [routerLink]="['..']">
+               <div class="pull-left">
+                  <h4 class="mb-0"> 
+                     <i class="cil-chevron-left mr-2"></i>Trang chủ
+                  </h4>
+               </div>
+            </a>
+         </div>
+      </div>
+      <div class="card mb-2">
+         <div class="card-body">
+            <a class="clearfix my-2" [routerLink]="[0]">
+               <div class="pull-left">
+                  <h4 class="mb-0">Tất cả</h4>
+               </div>
+            </a>
+         </div>
+      </div>
+      <div class="card mb-2" *ngFor="let category of categories">
+         <div class="card-body">
+            <a class="clearfix my-2" 
+               [routerLink]="[category.id]">
+               <div class="pull-left">
+                  <h4 class="mb-0">{{ category.name }}</h4>
+                  <p class="mb-0">{{ category.detail }}</p>
+               </div>
+            </a>
+         </div>
+      </div>
+   </div>
+</div>

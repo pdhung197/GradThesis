@@ -1,0 +1,40 @@
+<p class="h5">Loại món ăn</p>
+<div class="card">
+  <div class="card-body">
+
+    <div class="mb-3" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+      <button class="btn btn-info" type="button" (click)="openEditModal(null)">
+        <i class="cil-plus mx-1"></i>Thêm loại
+      </button>
+    </div>
+
+    <div *ngIf="data$ | async as data">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr class="table-success">
+              <th scope="col" class="col-name">Tên loại</th>
+              <th scope="col" class="col-action" *ngIf="auth.getCurrentUser().role === 'ADMIN'">Hành động</th>
+              <th scope="col" class="col-action" *ngIf="auth.getCurrentUser().role !== 'ADMIN'">Mô tả</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data.categories">
+              <th scope="row" class="align-middle">{{ item.name }}</th>
+              <td class="text-center align-middle" *ngIf="auth.getCurrentUser().role === 'ADMIN'">
+                <button class="mx-1 btn btn-outline-info" type="button" (click)="openEditModal(item)">
+                  <i class="cil-pencil"></i>
+                </button>
+                <button class="mx-1 btn btn-outline-danger" (click)="openDeleteModal(item.id)">
+                  <i class="cil-trash"></i>
+                </button>
+              </td>
+              <td *ngIf="auth.getCurrentUser().role !== 'ADMIN'">{{ item.detail }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

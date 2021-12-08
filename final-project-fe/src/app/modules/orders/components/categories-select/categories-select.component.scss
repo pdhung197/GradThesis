@@ -1,0 +1,9 @@
+a {
+    cursor: pointer;
+    color: black;
+
+    &:hover {
+        color: darkgray;
+        text-decoration: none;
+    }
+}

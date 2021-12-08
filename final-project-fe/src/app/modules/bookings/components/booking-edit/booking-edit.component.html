@@ -1,0 +1,113 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{ booking ? 'Chỉnh sửa thông tin đặt bàn' : 'Đặt bàn' }}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-6">
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="customerName">Họ và tên</label>
+                <input type="text" id="customerName" class="form-control" formControlName="customerName">
+              </div>
+              <div *ngIf="f.customerName.invalid && (f.customerName.dirty || f.customerName.touched)" class="invalid-message">
+                Vui lòng nhập họ và tên
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" id="phone" class="form-control" formControlName="phone">
+              </div>
+              <div *ngIf="f.phone.invalid && (f.phone.dirty || f.phone.touched)" class="invalid-message">
+                Vui lòng nhập số điện thoại là số
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-7">
+              <div class="form-group">
+                <label for="bookingDate">Ngày</label>
+                <input type="text" id="bookingDate" class="form-control mt-4" 
+                  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="minDate" formControlName="bookingDate">
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="form-group">
+                <label for="bookingTime">Giờ</label>
+                <timepicker [showMeridian]="false" formControlName="bookingTime"></timepicker>
+              </div>
+            </div>
+            <div *ngIf="(f.bookingDate.invalid || f.bookingTime.invalid) && ((f.bookingDate.dirty || f.bookingDate.touched) || (f.bookingTime.dirty || f.bookingTime.touched))" class="ml-3 mb-2 invalid-message">
+              Vui lòng chọn ngày giờ đặt bàn
+            </div>
+          </div>
+
+        </div>
+        <div class="col-6">
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="numberOfPeople">Số người</label>
+                <input type="number" id="numberOfPeople" class="form-control" formControlName="numberOfPeople">
+              </div>
+              <div *ngIf="f.numberOfPeople.invalid && (f.numberOfPeople.dirty || f.numberOfPeople.touched)" class="invalid-message">
+                Vui lòng nhập số người
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="deposit">Đặt cọc</label>
+                <input type="number" id="deposit" class="form-control" formControlName="deposit">
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="status">Trạng thái</label>
+                <select id="status" class="form-control" formControlName="status">
+                  <option value="NotConfirmed">Chưa xác nhận</option>
+                  <option value="Confirmed">Đã xác nhận</option>
+                  <option value="Cancelled">Đã hủy</option>
+                  <option value="NotArrived">Chưa đến</option>
+                  <option value="Finished">Đã hoàn thành</option>
+                </select>
+              </div>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="note">Ghi chú</label>
+                <input type="text" id="note" class="form-control" formControlName="note">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+      <button type="submit" class="btn btn-info" [disabled]="!bookingForm.valid">Lưu</button>
+    </div>
+  </form>

@@ -1,0 +1,11 @@
+.card {
+    .card-body {
+        .icon-x4 {
+            font-size: 50px;
+            transform: rotate(180deg);
+        }
+    }
+    .card-footer {
+        border-top: none;
+    }
+}

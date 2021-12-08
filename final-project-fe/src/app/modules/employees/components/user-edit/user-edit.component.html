@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ user ? 'Chỉnh sửa thông tin tài khoản' : 'Thêm tài khoản' }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+
+    <div class="row" *ngIf="employee">
+      <div class="col-12">
+        <div class="form-group">
+          <label>Tạo mới tài khoản cho nhân viên: </label>
+          <label class="mx-5"><strong>{{ employee.name }}</strong></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="name">Họ tên người dùng</label>
+          <input type="text" id="name" class="form-control" formControlName="name">
+        </div>
+        <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)" class="invalid-message">
+          Vui lòng nhập tên người dùng
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="username">Tên đăng nhập</label>
+          <input type="text" id="username" class="form-control" formControlName="username">
+        </div>
+        <div *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)" class="invalid-message">
+          Vui lòng nhập tên đăng nhập
+        </div>
+      </div>
+    </div>  
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <input type="password" id="password" class="form-control" formControlName="password">
+        </div>
+        <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" class="invalid-message">
+          Vui lòng nhập mật khẩu
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="role">Vai trò</label>
+          <select id="role" class="form-control" formControlName="role">
+            <option value="SALE_EMP" selected>Nhân viên thu ngân</option>
+            <option value="STORE_EMP">Nhân viên quản lý kho</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Hủy</button>
+    <button type="submit" class="btn btn-info" [disabled]="!userForm.valid">Lưu</button>
+  </div>
+</form>

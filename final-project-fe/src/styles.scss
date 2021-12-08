@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "assets/scss/custom.scss";
+@import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
+
+@import '../node_modules/alertifyjs/build/css/alertify.min.css';
+@import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
+
+body {
+
+  .invalid-message {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: red;
+  }
+
+  .btn-info {
+    background-color: #63c2de;
+    color: black;
+    border: none;
+
+    &:hover {
+      background-color: #63c2de;
+      color: black;
+    }
+    &:active {
+      background-color: #63c2de;
+    }
+  }
+}
