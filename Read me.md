@@ -13,9 +13,9 @@
 
 - Tại thư mục FinalProject mở cmd và gõ lệnh `dotnet-ef database update -s FinalProject -p DataModels` để cài đặt cơ sở dữ liệu
 
-- Tại thư mục con FinalProject mở cmd và gõ lệnh `dotnet build -c Release` để biên dịch chương trình
+- Tại thư mục con FinalProject (nằm trong thư mục FinalProject), mở cmd và gõ lệnh `dotnet build -c Release` để biên dịch chương trình.
 
-- Tại thư mục đã biên dịch mở cmd và gõ lệnh`dotnet FinalProject.dll` để khởi động server
+- Tại thư mục đã biên dịch mở cmd và gõ lệnh`dotnet FinalProject.dll` để khởi động server.
 
 3. Cài đặt cho web client phía frontend:
 
