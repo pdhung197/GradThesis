@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, OnInit } from "@angular/core";
+import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
-  selector: 'app-confirm-modal',
-  templateUrl: './confirm-modal.component.html',
-  styleUrls: ['./confirm-modal.component.scss']
+  selector: "app-confirm-modal",
+  templateUrl: "./confirm-modal.component.html",
+  styleUrls: ["./confirm-modal.component.scss"],
 })
 export class ConfirmModalComponent implements OnInit {
+  public prompt: string;
+  public callback: (result: any) => void;
 
-  constructor(public bsModalRef: BsModalRef) { }
+  constructor(public bsModalRef: BsModalRef) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public confirm(confirm: boolean): void {
     if (this.bsModalRef.content.callback != null) {
@@ -19,5 +20,4 @@ export class ConfirmModalComponent implements OnInit {
       this.bsModalRef.hide();
     }
   }
-
 }
