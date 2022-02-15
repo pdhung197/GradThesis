@@ -8,7 +8,7 @@
 
 **Các bước cài đặt và sử dụng chương trình:**
 
-1. Tải file zip của dự án final-project-master.zip về máy và gỡ nén
+1. Tải file zip của dự án `final-project-master.zip` về máy và gỡ nén
 1. Cài đặt cơ sở dữ liệu và khởi động server:
 
 - Tại thư mục FinalProject mở cmd và gõ lệnh `dotnet-ef database update -s FinalProject -p DataModels` để cài đặt cơ sở dữ liệu
