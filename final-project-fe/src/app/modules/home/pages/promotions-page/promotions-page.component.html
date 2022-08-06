@@ -1,18 +1,24 @@
 <div class="container" *ngIf="promotions$ | async as data">
-
   <h1 class="my-4">
-    <a [routerLink]="['/']"> 
-      <img src="../../../../../assets/images/logo.png" class="logo mr-4">
+    <a [routerLink]="['/']">
+      <img src="../../../../../assets/images/logo.png" class="logo mr-4" />
     </a>
     Chương trình khuyến mãi
   </h1>
 
-  <div class="row">
-
+  <div class="row" *ngIf="mainPromo">
     <div class="col-md-8">
       <div class="d-flex justify-content-center">
-        <img class="img-fluid main-img" src="{{ rootImgPath }}/{{ mainPromo.attachmentId }}" *ngIf="mainPromo.attachmentId">
-        <img class="img-fluid" src="../../../../../assets/images/blank.png" *ngIf="!mainPromo.attachmentId">
+        <img
+          class="img-fluid main-img"
+          src="{{ rootImgPath }}/{{ mainPromo.attachmentId }}"
+          *ngIf="mainPromo?.attachmentId"
+        />
+        <img
+          class="img-fluid"
+          src="../../../../../assets/images/blank.png"
+          *ngIf="!mainPromo?.attachmentId"
+        />
       </div>
     </div>
 
@@ -25,34 +31,41 @@
         </a>
       </div>
     </div>
-
   </div>
   <!-- /.row -->
 
   <!-- Related Projects Row -->
   <h3 class="my-4">Ưu đãi khác</h3>
 
-  <div class="row" *ngFor="let array of otherPromo">
-
-    <div class="col-md-3 col-sm-6 mb-4" *ngFor="let promo of array">
-      <a [routerLink]="[promo.id]">
-        <img class="img-fluid" src="../../../../../assets/images/blank.png" *ngIf="!promo.attachmentId">
-        <img class="img-fluid sub-img" src="{{ rootImgPath }}/{{ promo.attachmentId }}" *ngIf="promo.attachmentId">
-        <div class="text-center mt-1">
-          <p class="h6 font-weight-bold text-uppercase">{{ promo.describe }}</p>
-        </div>
-      </a>
+  <ng-container *ngIf="otherPromo?.length">
+    <div class="row" *ngFor="let array of otherPromo">
+      <div class="col-md-3 col-sm-6 mb-4" *ngFor="let promo of array">
+        <a [routerLink]="[promo.id]">
+          <img
+            class="img-fluid"
+            src="../../../../../assets/images/blank.png"
+            *ngIf="!promo?.attachmentId"
+          />
+          <img
+            class="img-fluid sub-img"
+            src="{{ rootImgPath }}/{{ promo.attachmentId }}"
+            *ngIf="promo?.attachmentId"
+          />
+          <div class="text-center mt-1">
+            <p class="h6 font-weight-bold text-uppercase">
+              {{ promo.describe }}
+            </p>
+          </div>
+        </a>
+      </div>
     </div>
-
-  </div>
+  </ng-container>
   <!-- /.row -->
-
 </div>
 
 <!-- /.container -->
 <section class="py-3 colorlib-intro">
   <div class="container">
-
     <div class="row">
       <div class="col-md-3 col-sm-6 text-center">
         <div class="intro animate-box">
@@ -60,7 +73,7 @@
             <i class="cil-location-pin"></i>
           </span>
           <h2>Địa Chỉ</h2>
-          <p>210 - 212 Đường 30/4, Quận Hải Châu<br>TP. Đà Nẵng</p>
+          <p>210 - 212 Đường 30/4, Quận Hải Châu<br />TP. Đà Nẵng</p>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 text-center">
@@ -89,20 +102,21 @@
             <i class="cil-envelope-closed"></i>
           </span>
           <h2>Email</h2>
-          <p>infothanhtuyenson@gmail.com<br></p>
+          <p>infothanhtuyenson@gmail.com<br /></p>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
 <footer class="c-footer">
   <div>Copyright &copy; by TUYEN SON RESTAURANT</div>
   <div class="ml-auto">
-    <a *ngIf="!authService.loggedIn()" [routerLink]="['/dang-nhap']">Đăng nhập</a>
+    <a *ngIf="!authService.loggedIn()" [routerLink]="['/dang-nhap']"
+      >Đăng nhập</a
+    >
     <div *ngIf="authService.loggedIn()">
-      Chào mừng, <a [routerLink]="['/quan-ly/goi-mon']">{{ user?.name }}</a> 
+      Chào mừng, <a [routerLink]="['/quan-ly/goi-mon']">{{ user?.name }}</a>
     </div>
   </div>
 </footer>
