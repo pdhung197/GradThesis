@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://tuyenson-res-api.herokuapp.com/api',
+  apiUrl: 'https://localhost:5001/api',
   firebase: {
     apiKey: 'AIzaSyCazBDxPyQoWFvMZZ9Pu0FINMfmNegtlzA',
     authDomain: 'ts-restaurant.firebaseapp.com',
